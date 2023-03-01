@@ -1,9 +1,3 @@
-// import FormData from "form-data";
-// import fs from "fs";
-// import axios from "axios";
-// import * as dotenv from "dotenv";
-// dotenv.config();
-
 const FormData = require("form-data");
 const fs = require("fs");
 const axios = require("axios");
