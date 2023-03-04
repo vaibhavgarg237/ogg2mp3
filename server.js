@@ -1,9 +1,19 @@
-import express from "express";
-import ffmpeg from "fluent-ffmpeg";
-import * as url from "url";
-import path from "path";
-import { transcribeAudio } from "./utilities/process-audio";
-const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
+// import express from "express";
+// import ffmpeg from "fluent-ffmpeg";
+// import * as url from "url";
+// import path from "path";
+// import { transcribeAudio } from "./utilities/process-audio";
+const express = require("express");
+const ffmpeg = require("fluent-ffmpeg");
+
+const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
+process.env.FFMPEG_PATH = ffmpegPath;
+
+// const url = require('url');
+const path = require("path");
+const { transcribeAudio } = require("./utilities/process-audio");
+
+// const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -17,15 +27,31 @@ app.listen(PORT, () => {
 });
 
 //handle file conversion
-const BINARY_PATH = path.join(
-  __dirname,
-  "ffmpegPrebuild",
-  "ffmpeg-windows",
-  "bin",
-  "ffmpeg.exe"
-);
-ffmpeg.setFfmpegPath(BINARY_PATH);
-console.log(`setFfmpegPath call for path[: ${BINARY_PATH} ]`);
+// const BINARY_PATH = path.join(
+//   __dirname,
+//   "ffmpegPrebuild",
+//   "ffmpeg-windows",
+//   "bin",
+//   "ffmpeg.exe"
+// );
+// ffmpeg.setFfmpegPath(BINARY_PATH);
+// console.log(`setFfmpegPath call for path[: ${BINARY_PATH} ]`);
+
+// const ogg2mp3 = async () => {
+//   const inputPath = path.join(__dirname, "tmp", "input.ogg");
+//   const outputPath = path.join(__dirname, "tmp", "output.mp3");
+
+//   ffmpeg(inputPath)
+//     .output(outputPath)
+//     .on("end", () => {
+//       console.log("File conversion done");
+//       // transcribeAudio(outputPath);
+//     })
+//     .on("error", (err) => {
+//       console.log("error occured", err);
+//     })
+//     .run();
+// };
 
 const ogg2mp3 = async () => {
   const inputPath = path.join(__dirname, "tmp", "input.ogg");
@@ -42,4 +68,5 @@ const ogg2mp3 = async () => {
     })
     .run();
 };
+
 ogg2mp3();
